@@ -1,0 +1,73 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>DDA</title>
+    <link href="style/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    
+<div class="container">
+    <div class="heading">
+        <h1 class="title">Line Tool</h1>
+        <h3 class="author">UIT</h3>
+        <label for="dropdown">Chọn một tùy chọn:</label>
+        <select id="dropdown" onchange="update_canvas()">
+            <option value="dda">DDA</option>
+            <option value="bresenham">Bresenham</option>
+            <option value="midpoint">MidPoint</option>
+        </select>
+    </div>
+    <p class="hint">ESC</p>
+
+    <div class="main-container">
+        <canvas id="canvas">
+        </canvas>
+    </div>
+
+    <div class="buttons">
+        <button id="reset">
+            Reset
+        </button>
+    </div>
+
+    <h3 id="result"></h3>
+
+    <script>
+        const update_canvas = () => {
+            let dropdown_value = document.getElementById("dropdown").value;
+            
+            // Xóa script cũ nếu đã tồn tại
+            let oldScript = document.getElementById("dynamic-script");
+            if (oldScript) {
+                oldScript.remove();
+            }
+    
+            // Kiểm tra và tạo script mới
+            if (dropdown_value === "dda") {
+                loadScript("src/dda.js");
+            } 
+            else if (dropdown_value === "bresenham") {
+                loadScript("src/bresenham.js");
+            } 
+            else if (dropdown_value === "midpoint")
+            {
+                loadScript("src/midpoint.js")
+            }
+
+        };
+    
+        // Hàm để tải script động
+        const loadScript = (src) => {
+            let script = document.createElement("script");
+            script.id = "dynamic-script"; // Để dễ xóa khi cần
+            script.src = src;
+            script.type = "text/javascript";
+            document.body.appendChild(script); // Thêm script vào trang
+        };
+    
+        // Gán sự kiện change cho dropdown
+        document.getElementById("dropdown").addEventListener("change", update_canvas);
+    </script>
+    <!-- <script type="text/javascript" src="src/dda.js"></script> -->
+</div>
