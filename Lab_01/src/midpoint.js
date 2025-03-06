@@ -6,9 +6,9 @@ var context = canvas.getContext("2d");
 var width = 800;
 var height = 600;
 
-var bgRgba = [240, 240, 200, 255];
+var bgRgba = [0, 0, 0, 255];
 var pointRgba = [0, 0, 255, 255];
-var lineRgba = [0, 0, 0, 255];
+var lineRgba = [255, 255, 255, 255];
 var vlineRgba = [255, 0, 0, 255];
 
 canvas.setAttribute("width", width);
@@ -51,7 +51,7 @@ function Painter(context, width, height) {
         var r = Math.round(Math.sqrt((t_x1 - t_x0) ** 2 + (t_y1 - t_y0) ** 2)); // Bán kính
         
         var x = 0;
-        var y = Math.round(r / Math.sqrt(2)); // Giới hạn y (từ 90° đến 45°)
+        var y = r; // Giới hạn y (từ 90° đến 45°)
         var d = 1 - r; // Midpoint ban đầu
         
         while (x <= y) 
@@ -92,14 +92,16 @@ function Painter(context, width, height) {
         this.points.push(p);
     }
 
-    this.draw = function(p) {
+    this.draw = function(p) 
+    {
         var n = this.points.length;
         this.drawBkg(bgRgba);
         for (var i = 0; i < n; i++)
             this.drawPoint(this.points[i], pointRgba);
         for (var i = 0; i < n - 1; i++)
             this.drawLine(this.points[i], this.points[i + 1], lineRgba);
-        if (n > 0 && (this.points[n - 1][0] != p[0] || this.points[n - 1][1] != p[1])) {
+        if (n > 0 && (this.points[n - 1][0] != p[0] || this.points[n - 1][1] != p[1])) 
+        {
             this.drawLine(this.points[n - 1], p, vlineRgba);
         }
         this.context.putImageData(this.imageData, 0, 0);
@@ -164,3 +166,4 @@ window.addEventListener("keydown", doKeyDown, false);
 
 var resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", doReset, false);
+

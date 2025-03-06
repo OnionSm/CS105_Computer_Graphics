@@ -1,73 +1,78 @@
-<html>
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>DDA</title>
-    <link href="style/main.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Tool</title>
+    <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
     
 <div class="container">
     <div class="heading">
         <h1 class="title">Line Tool</h1>
-        <h3 class="author">UIT</h3>
-        <label for="dropdown">Chọn một tùy chọn:</label>
-        <select id="dropdown" onchange="update_canvas()">
-            <option value="dda">DDA</option>
-            <option value="bresenham">Bresenham</option>
-            <option value="midpoint">MidPoint</option>
+        <h3 id="uit" class="author">UIT</h3>
+        <label id="label1" for="dropdown">Chọn một tùy chọn:</label>
+        <select id="dropdown">
+            <option class="dropdown_item" value="dda">DDA</option>
+            <option class="dropdown_item" value="bresenham">Bresenham</option>
+            <option class="dropdown_item" value="midpoint">MidPoint</option>
+            <option class="dropdown_item" value="ellipse">Ellipse</option>
         </select>
     </div>
+
     <p class="hint">ESC</p>
 
     <div class="main-container">
-        <canvas id="canvas">
-        </canvas>
+        <canvas id="canvas"></canvas>
     </div>
+    
 
     <div class="buttons">
-        <button id="reset">
-            Reset
-        </button>
+        <button id="reset">Reset</button>
     </div>
 
     <h3 id="result"></h3>
 
     <script>
-        const update_canvas = () => {
-            let dropdown_value = document.getElementById("dropdown").value;
-            
-            // Xóa script cũ nếu đã tồn tại
-            let oldScript = document.getElementById("dynamic-script");
-            if (oldScript) {
-                oldScript.remove();
-            }
-    
-            // Kiểm tra và tạo script mới
-            if (dropdown_value === "dda") {
-                loadScript("src/dda.js");
-            } 
-            else if (dropdown_value === "bresenham") {
-                loadScript("src/bresenham.js");
-            } 
-            else if (dropdown_value === "midpoint")
-            {
-                loadScript("src/midpoint.js")
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            const dropdown = document.getElementById("dropdown");
 
-        };
-    
-        // Hàm để tải script động
-        const loadScript = (src) => {
-            let script = document.createElement("script");
-            script.id = "dynamic-script"; // Để dễ xóa khi cần
+            // Tải DDA.js mặc định
+            loadScript("src/dda.js");
+
+            dropdown.addEventListener("change", () => {
+                updateCanvas(dropdown.value);
+            });
+        });
+
+        function updateCanvas(value) {
+            const scriptMap = {
+                "dda": "src/dda.js",
+                "bresenham": "src/bresenham.js",
+                "midpoint": "src/midpoint.js",
+                "ellipse": "src/ellipse.js"
+            };
+
+            if (!scriptMap[value]) return;
+
+            // Xóa script cũ nếu đã tồn tại
+            const oldScript = document.getElementById("dynamic-script");
+            if (oldScript) oldScript.remove();
+
+            // Tải script mới
+            loadScript(scriptMap[value]);
+        }
+
+        function loadScript(src) {
+            const script = document.createElement("script");
+            script.id = "dynamic-script";
             script.src = src;
             script.type = "text/javascript";
-            document.body.appendChild(script); // Thêm script vào trang
-        };
-    
-        // Gán sự kiện change cho dropdown
-        document.getElementById("dropdown").addEventListener("change", update_canvas);
+            document.body.appendChild(script);
+        }
     </script>
-    <!-- <script type="text/javascript" src="src/dda.js"></script> -->
 </div>
+
+</body>
+</html>

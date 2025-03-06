@@ -6,9 +6,9 @@ var context = canvas.getContext("2d");
 var width = 800;
 var height = 600;
 
-var bgRgba = [240, 240, 200, 255];
+var bgRgba = [0, 0, 0, 255];
 var pointRgba = [0, 0, 255, 255];
-var lineRgba = [0, 0, 0, 255];
+var lineRgba = [255, 255, 255, 255];
 var vlineRgba = [255, 0, 0, 255];
 
 canvas.setAttribute("width", width);
