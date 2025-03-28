@@ -89,3 +89,6 @@ body {
     content: "Objects: ";
     font-weight: bold;
 }
+#text_area {
+    height: 100px;
+} 

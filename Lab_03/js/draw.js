@@ -82,12 +82,12 @@ if (!gl.getProgramParameter(program, gl.LINK_STATUS))
 {
     console.error(gl.getProgramInfoLog(program));
 }
-
+const positionLocation = gl.getAttribLocation(program, "a_position");
 
 function DrawObject() 
 {
   gl.useProgram(program);
-  const positionLocation = gl.getAttribLocation(program, "a_position");
+  
   gl.enableVertexAttribArray(positionLocation);
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
@@ -100,6 +100,6 @@ function DrawObject()
 // DrawObject();
 
 document.addEventListener("DOMContentLoaded", () => {
-  ConfigDropdown(gl, vertices, () => DrawObject());
+  ConfigDropdown(gl, vertices, () => DrawObject(), positionLocation);
 });
 

@@ -20,7 +20,66 @@
             <div style="width: 300px; margin: 50px auto; text-align: center;">
                 <input type="range" id="slider" min="1" max="500" value="1">
                 <p>Giá trị: <span id="sliderValue">1</span></p>
-              </div>
+            </div>
+            
+            <textarea id="text_area" onfocus="this.setSelectionRange(this.value.length, this.value.length)"></textarea>
+            <div style="display: flex; flex-direction: column; width: 100%;"> 
+                <div>
+                    <p>Point A</p>
+                    <div style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;">
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
+                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="point_a_x"></textarea>
+                        </div>
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
+                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="point_a_y"></textarea>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div>
+                    <p>Point B</p>
+                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
+                            <textarea style="font-size : 18px ; margin-left: 5px;; margin-right:  5px;" id="point_b_x"></textarea>
+                        </div>
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
+                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="point_b_y"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>Vector A</p>
+                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
+                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="vector_a_x"></textarea>
+                        </div>
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
+                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="vector_a_y"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>Vector B</p>
+                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
+                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="vector_b_x"></textarea>
+                        </div>
+                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
+                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
+                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="vector_b_y"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
         </div>
         
           
