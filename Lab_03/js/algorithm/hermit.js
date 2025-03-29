@@ -1,4 +1,4 @@
-const DrawHermit = (gl, point_a, point_b, vector_a, vector_b, DrawObject = null, positionLocation) => {
+const DrawHermit = (gl, point_a, point_b, vector_a, vector_b, DrawObject = null) => {
   console.log("Drawing Hermite with control points:", point_a, point_b);
 
   if (!point_a || !point_b || !vector_a || !vector_b) {

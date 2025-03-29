@@ -1,16 +1,17 @@
-const DrawHeart = (a, gl, vertices, DrawObject = null) => {
+const DrawHeart = (gl, DrawObject = null, a) => {
   console.log("Drawing Heart with a =", a);
   var scale = 0.05;
   var steps = 500;
   // Reset vertices array
-  vertices.length = 0;
+  var vertices = [];
   
   const minX = -Math.sqrt(200); // Giới hạn toán học của hàm √(33 - x²)
   const maxX = Math.sqrt(200);
   const step = (maxX - minX) / steps;
 
   // Tính toán các điểm
-  for (let x = minX; x <= maxX; x += step) {
+  for (let x = minX; x <= maxX; x += step) 
+  {
     const y = Math.pow(Math.abs(x), 2/3) + 
               0.8 * Math.sqrt(200 - x**2) * // Đảm bảo không âm
               Math.sin(0.01 * a * Math.PI * x);

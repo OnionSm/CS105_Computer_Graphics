@@ -1,4 +1,4 @@
-const ConfigTextArea = (state = false, DrawBenzier = null, gl, vertices, DrawObject ,positionLocation) => {
+const ConfigTextArea = (gl, DrawObject ,DrawBenzier = null) => {
     const text_area = document.getElementById("text_area");
 
     if (!text_area) {
@@ -6,9 +6,7 @@ const ConfigTextArea = (state = false, DrawBenzier = null, gl, vertices, DrawObj
         return;
     }
     var vertices = [];
-    // Enable the textarea if required
-    text_area.disabled = !state;
-
+ 
     // Add an event listener for input change
     text_area.addEventListener('input', (event) => {
         const inputText = event.target.value.trim();
@@ -25,7 +23,7 @@ const ConfigTextArea = (state = false, DrawBenzier = null, gl, vertices, DrawObj
             console.log("Chuỗi không phù hợp");
             vertices = [];
         }
-        DrawBenzier(gl, vertices, DrawObject, positionLocation);
+        DrawBenzier(gl, DrawObject, vertices);
     });
     
     return {

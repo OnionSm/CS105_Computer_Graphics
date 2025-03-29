@@ -1,4 +1,5 @@
-const ConfigSlider = (isEnabled = true, callback = null, gl, vertices, DrawObject = null) => {
+const ConfigSlider = (isEnabled = true, gl, DrawObject = null, algorithm = null) => {
+
   const slider = document.getElementById('slider');
   const sliderValue = document.getElementById('sliderValue');
   let currentValue = 50; // Giá trị mặc định
@@ -16,16 +17,18 @@ const ConfigSlider = (isEnabled = true, callback = null, gl, vertices, DrawObjec
       const handleSliderChange = () => 
       {
           currentValue = slider.value;
+          console.log(currentValue);
           sliderValue.textContent = currentValue;
-          callback(currentValue, gl, vertices, DrawObject);
+          algorithm(gl, DrawObject, currentValue);
       };
 
       if (isEnabled) 
       {
-          slider.addEventListener('input', handleSliderChange);
-      } else 
+        slider.addEventListener('input', handleSliderChange);
+      } 
+      else 
       {
-          slider.removeEventListener('input', handleSliderChange);
+        slider.removeEventListener('input', handleSliderChange);
       }
 
       // Trả về một object chứa hàm getValue để lấy giá trị hiện tại

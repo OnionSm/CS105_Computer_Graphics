@@ -100,6 +100,6 @@ function DrawObject()
 // DrawObject();
 
 document.addEventListener("DOMContentLoaded", () => {
-  ConfigDropdown(gl, vertices, () => DrawObject(), positionLocation);
+  ConfigDropdown(gl, () => DrawObject());
 });
 

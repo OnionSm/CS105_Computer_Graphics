@@ -11,7 +11,7 @@ const binomialCoefficient = (n, i) => {
     return factorial(n) / (factorial(i) * factorial(n - i));
 };
 
-const DrawBezier = (gl, vertices, DrawObject = null, positionLocation) => {
+const DrawBezier = (gl, DrawObject = null , vertices) => {
     console.log("Drawing Bezier with", vertices.length / 2, "control points");
 
     if (!vertices || vertices.length < 4 || vertices.length % 2 !== 0) {
@@ -42,11 +42,7 @@ const DrawBezier = (gl, vertices, DrawObject = null, positionLocation) => {
         newVertices.push(x / gl.canvas.width, y / gl.canvas.height);
         
     }
-    console.log(newVertices);
-    // Gửi dữ liệu mới vào WebGL buffer
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(newVertices), gl.STATIC_DRAW);
-
-   
     DrawObject();
 };
 

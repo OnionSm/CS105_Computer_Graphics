@@ -89,6 +89,8 @@ body {
     content: "Objects: ";
     font-weight: bold;
 }
-#text_area {
-    height: 100px;
-} 
+#myDropdown {
+    width: 70%;
+    height: 30px;
+    margin: 10px 0;
+}

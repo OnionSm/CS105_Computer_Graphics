@@ -5,79 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebGL Example</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/slider.css">
+    <link rel="stylesheet" href="css/hermit_input.css">
+    <link rel="stylesheet" href="css/benzier_input.css">
 </head>
 <body>
-    <h1 style="color: rgb(165, 26, 91); font-size: xx-large;">2D AFINE TRANSFORMATION</h1>
+    <h1 style="color: rgb(165, 26, 91); font-size: xx-large;">2D AFFINE TRANSFORMATION</h1>
     <div id="main_zone">
         <canvas id="canvas"></canvas>
-        <div id="uiContainer">
-            <select id="myDropdown" name="options">
-                <option value="heart" selected>Heart</option>
-                <option value="benzier">Benzier</option>
-                <option value="hermit">Hermit</option>
-                <option value="flower">Flower</option>
-            </select>
-            <div style="width: 300px; margin: 50px auto; text-align: center;">
-                <input type="range" id="slider" min="1" max="500" value="1">
-                <p>Giá trị: <span id="sliderValue">1</span></p>
+        <div id="uiContainer" >
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <p style="font-weight:  bold; ">Thuật toán</p>
+                <select id="myDropdown" name="options">
+                    <option value="heart" selected>Heart</option>
+                    <option value="benzier">Benzier</option>
+                    <option value="hermit">Hermit</option>
+                    <option value="flower">Flower</option>
+                </select>
             </div>
             
-            <textarea id="text_area" onfocus="this.setSelectionRange(this.value.length, this.value.length)"></textarea>
-            <div style="display: flex; flex-direction: column; width: 100%;"> 
-                <div>
+            <div id="slider_container" style="display: flex">
+                <span id="sliderValue">1</span>
+                <input type="range" id="slider" min="1" max="500" value="1">
+                <div id="box-minmax">
+                    <span>1</span>
+                    <span>500</span>
+                </div>
+            </div>
+            
+            <textarea id="text_area" style="display: block;" onfocus="this.setSelectionRange(this.value.length, this.value.length)"
+            placeholder="Vui lòng nhập danh sách điểm theo dạng x1,y1,x2,y2,..."></textarea>
+
+   
+            <div id="hermit_input_container">
+                <div class="point-container">
                     <p>Point A</p>
-                    <div style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;">
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
-                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="point_a_x"></textarea>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <p>X</p>
+                            <textarea id="point_a_x"></textarea>
                         </div>
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
-                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="point_a_y"></textarea>
+                        <div class="input-box">
+                            <p>Y</p>
+                            <textarea id="point_a_y"></textarea>
                         </div>
                     </div>
-                    
                 </div>
-                <div>
+                
+                <div class="point-container">
                     <p>Point B</p>
-                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
-                            <textarea style="font-size : 18px ; margin-left: 5px;; margin-right:  5px;" id="point_b_x"></textarea>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <p>X</p>
+                            <textarea id="point_b_x"></textarea>
                         </div>
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
-                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="point_b_y"></textarea>
+                        <div class="input-box">
+                            <p>Y</p>
+                            <textarea id="point_b_y"></textarea>
                         </div>
                     </div>
                 </div>
-                <div>
+                
+                <div class="vector-container">
                     <p>Vector A</p>
-                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
-                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="vector_a_x"></textarea>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <p>X</p>
+                            <textarea id="vector_a_x"></textarea>
                         </div>
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
-                            <textarea style="font-size : 18px ;margin-left: 5px; margin-right:  5px;" id="vector_a_y"></textarea>
+                        <div class="input-box">
+                            <p>Y</p>
+                            <textarea id="vector_a_y"></textarea>
                         </div>
                     </div>
                 </div>
-                <div>
+                
+                <div class="vector-container">
                     <p>Vector B</p>
-                    <div style="display: flex;  flex-direction: row; justify-content: space-evenly; align-items: center;">
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">X</p>
-                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="vector_b_x"></textarea>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <p>X</p>
+                            <textarea id="vector_b_x"></textarea>
                         </div>
-                        <div style="width: 30%; height: 30px; display: flex; flex-direction: row;">
-                            <p style="margin-left: 5px; margin-right:  5px; align-self: center;">Y</p>
-                            <textarea style="font-size : 18px ; margin-left: 5px; margin-right:  5px;" id="vector_b_y"></textarea>
+                        <div class="input-box">
+                            <p>Y</p>
+                            <textarea id="vector_b_y"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- <p>Flower Slider</p>
+            <div style="width: 300px; margin: 50px auto; text-align: center;">
+                <input type="range" id="flower_slider" min="1" max="500" value="1">
+                <p>Giá trị: <span id="sliderValue">1</span></p>
+            </div> -->
             
             
         </div>

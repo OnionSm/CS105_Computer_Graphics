@@ -1,4 +1,5 @@
-const ConfigHermitInputField = (gl, DrawHermit, DrawObject, positionLocation) => {
+const ConfigHermitInputField = (gl, DrawObject, DrawHermit) => {
+
     const point_a_x = document.getElementById("point_a_x");
     const point_a_y = document.getElementById("point_a_y");
     const point_b_x = document.getElementById("point_b_x");
@@ -14,7 +15,7 @@ const ConfigHermitInputField = (gl, DrawHermit, DrawObject, positionLocation) =>
         const vector_a = { x: parseFloat(vector_a_x.value), y: parseFloat(vector_a_y.value) };
         const vector_b = { x: parseFloat(vector_b_x.value), y: parseFloat(vector_b_y.value) };
         
-        DrawHermit(gl, point_a, point_b, vector_a, vector_b, DrawObject, positionLocation);
+        DrawHermit(gl, point_a, point_b, vector_a, vector_b, DrawObject);
     };
 
     point_a_x.oninput = updateAndDraw;
