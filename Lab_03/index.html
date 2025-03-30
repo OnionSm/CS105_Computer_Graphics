@@ -1,167 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebGL Example</title>
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="css/slider.css">
-    <link rel="stylesheet" href="css/hermit_input.css">
-    <link rel="stylesheet" href="css/benzier_input.css">
+  <meta charset="utf-8">
+  <title>Computer Graphics Lab 3 - Curves</title>
+  <link rel="stylesheet" href="webgl-tutorials.css">
+  <style>
+    .control-panel {
+      margin: 20px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+    }
+    .tab-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .tab {
+      padding: 10px 20px;
+      margin-right: 5px;
+      background-color: #ddd;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+    }
+    .tab.active {
+      background-color: #fff;
+    }
+    .tab-content {
+      display: none;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 0 5px 5px 5px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    canvas {
+      width: 800px;
+      height: 600px;
+    }
+    input[type="text"], input[type="number"] {
+      width: 60px;
+      margin-right: 5px;
+    }
+    label {
+      margin-right: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1 style="color: rgb(165, 26, 91); font-size: xx-large;">2D AFFINE TRANSFORMATION</h1>
-    <div id="main_zone">
-        <canvas id="canvas"></canvas>
-        <div id="uiContainer" >
-            <div style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                <p style="font-weight:  bold; ">Thuật toán</p>
-                <select id="myDropdown" name="options">
-                    <option value="heart" selected>Heart</option>
-                    <option value="benzier">Benzier</option>
-                    <option value="hermit">Hermit</option>
-                    <option value="flower">Flower</option>
-                </select>
-            </div>
-            
-            <div id="slider_container" style="display: flex">
-                <span id="sliderValue">1</span>
-                <input type="range" id="slider" min="1" max="500" value="1">
-                <div id="box-minmax">
-                    <span>1</span>
-                    <span>500</span>
-                </div>
-            </div>
-            
-            <textarea id="text_area" style="display: block;" onfocus="this.setSelectionRange(this.value.length, this.value.length)"
-            placeholder="Vui lòng nhập danh sách điểm theo dạng x1,y1,x2,y2,..."></textarea>
-
-   
-            <div id="hermit_input_container">
-                <div class="point-container">
-                    <p>Point A</p>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <p>X</p>
-                            <textarea id="point_a_x"></textarea>
-                        </div>
-                        <div class="input-box">
-                            <p>Y</p>
-                            <textarea id="point_a_y"></textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="point-container">
-                    <p>Point B</p>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <p>X</p>
-                            <textarea id="point_b_x"></textarea>
-                        </div>
-                        <div class="input-box">
-                            <p>Y</p>
-                            <textarea id="point_b_y"></textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="vector-container">
-                    <p>Vector A</p>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <p>X</p>
-                            <textarea id="vector_a_x"></textarea>
-                        </div>
-                        <div class="input-box">
-                            <p>Y</p>
-                            <textarea id="vector_a_y"></textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="vector-container">
-                    <p>Vector B</p>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <p>X</p>
-                            <textarea id="vector_b_x"></textarea>
-                        </div>
-                        <div class="input-box">
-                            <p>Y</p>
-                            <textarea id="vector_b_y"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <p>Flower Slider</p>
-            <div style="width: 300px; margin: 50px auto; text-align: center;">
-                <input type="range" id="flower_slider" min="1" max="500" value="1">
-                <p>Giá trị: <span id="sliderValue">1</span></p>
-            </div> -->
-            
-            
+  <h1>Computer Graphics Lab 3 - Curves</h1>
+  
+  <div class="container">
+    <canvas id="canvas"></canvas>
+    
+    <div class="control-panel">
+      <div class="tab-container">
+        <div class="tab active" data-tab="function">Hàm số</div>
+        <div class="tab" data-tab="bezier">Bezier</div>
+        <div class="tab" data-tab="hermit">Hermit</div>
+        <div class="tab" data-tab="flower">Cánh hoa</div>
+      </div>
+      
+      <div id="function" class="tab-content active">
+        <h3>1. Vẽ đồ thị hàm số y = f(x)</h3>
+        <div>
+          <label for="func-expression">f(x) = </label>
+          <input type="text" id="func-expression" value="Math.sin(x)" style="width: 200px;">
+        </div>
+        <div>
+          <label for="range-min">Min:</label>
+          <input type="number" id="range-min" value="-5" step="0.5">
+          <label for="range-max">Max:</label>
+          <input type="number" id="range-max" value="5" step="0.5">
+        </div>
+        <button id="draw-function">Vẽ đồ thị</button>
+      </div>
+      
+      <div id="bezier" class="tab-content">
+        <h3>2. Đường cong Bezier</h3>
+        <div>
+          <p>Nhập các điểm điều khiển (x,y):</p>
+          <textarea id="bezier-points" rows="4" cols="30">0,0
+1,1
+2,0
+3,1</textarea>
+        </div>
+        <button id="draw-bezier">Vẽ đường cong</button>
+      </div>
+      
+      <div id="hermit" class="tab-content">
+        <h3>3. Đường cong Hermit</h3>
+        <div>
+          <p>Điểm 1 (x,y):</p>
+          <input type="number" id="p1-x" value="0" step="0.5">
+          <input type="number" id="p1-y" value="0" step="0.5">
+          
+          <p>Điểm 2 (x,y):</p>
+          <input type="number" id="p2-x" value="5" step="0.5">
+          <input type="number" id="p2-y" value="0" step="0.5">
+          
+          <p>Vector 1 (x,y):</p>
+          <input type="number" id="v1-x" value="1" step="0.5">
+          <input type="number" id="v1-y" value="2" step="0.5">
+          
+          <p>Vector 2 (x,y):</p>
+          <input type="number" id="v2-x" value="1" step="0.5">
+          <input type="number" id="v2-y" value="-2" step="0.5">
+        </div>
+        <button id="draw-hermit">Vẽ đường cong</button>
+      </div>
+      
+      <div id="flower" class="tab-content">
+        <h3>4. Cánh hoa</h3>
+        <div>
+          <label for="petal-count">Số cánh hoa:</label>
+          <input type="number" id="petal-count" value="5" min="1" max="20" step="1">
         </div>
         
-          
+        <p>Số lẻ (n = 3, 5, 7, ...): x(t) = cos(nt)cos(t), y(t) = cos(nt)sin(t)</p>
+        <p>Số chẵn (n = 2, 6, 10, ...): x(t) = cos(n/2*t)cos(t), y(t) = cos(n/2*t)sin(t)</p>
+        <p>Số chẵn (n = 4, 8, 12, ...): x(t) = sin(n/2*t)cos(t), y(t) = sin(n/2*t)sin(t)</p>
+        <p>Trong đó: t ∈ [0,2π]</p>
+        <button id="draw-flower">Vẽ cánh hoa</button>
+      </div>
     </div>
-    
-    <div>
-
-    </div>
-    
-    <!-- vertex shader -->
-    <script id="vertex-shader-2d" type="x-shader/x-vertex">
-        attribute vec2 a_position;
-
-        uniform vec2 u_resolution;
-        uniform vec2 u_translation;
-        uniform vec2 u_rotation;
-
-        uniform vec2 u_scale;
-
-        void main() {
-            // Scale
-            vec2 scaledPosition = a_position * u_scale;
-            
-            // Rotate the position
-            vec2 rotatedPosition = vec2(
-                scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
-                scaledPosition.y * u_rotation.y - scaledPosition.x * u_rotation.x
-            );
-
-            // Add in the translation.
-            vec2 position = rotatedPosition + u_translation;
-
-            // convert the position from pixels to 0.0 to 1.0
-            vec2 zeroToOne = position / u_resolution;
-
-            // convert from 0->1 to 0->2
-            vec2 zeroToTwo = zeroToOne * 2.0;
-
-            // convert from 0->2 to -1->+1 (clipspace)
-            vec2 clipSpace = zeroToTwo - 1.0;
-
-            gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-        }
-    </script>
-    <!-- fragment shader -->
-    <script id="fragment-shader-2d" type="x-shader/x-fragment">
-        precision mediump float;
-
-        uniform vec4 u_color;
-
-        void main() 
-        {
-            gl_FragColor = u_color;
-        }
-    </script>
-    
-    <script src="js/webgl-utils.js"></script>
-    <script src="js/webgl-lessons-ui.js"></script>
-    <script type="module"  src="js/draw.js"></script>
-   
+  </div>
+  
+  <script src="webgl-utils.js"></script>
+  <script src="webgl-lessons-ui.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Tab switching logic
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
-
-
